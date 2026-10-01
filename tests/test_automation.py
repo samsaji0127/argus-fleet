@@ -87,3 +87,48 @@ def test_local_mode(tmp_path):
     text, _, bad = run_pipeline(cfg, local=True, now=datetime(2026, 10, 1, 14, 0))
     assert bad == 1                       # VEH-B has no local log
     assert "VEH-A" in text and "no local log found" in text
+
+
+def _rules(tmp_path, **extra):
+    cfg = {
+        "timestamp": [
+            {"regex": r"^\[?(\d{4}-\d{2}-\d{2}[ T]\d{2}:\d{2}:\d{2})", "format": "iso"},
+            {"regex": r"^[IWEF](\d{4} \d{2}:\d{2}:\d{2}\.\d+)", "format": "%m%d %H:%M:%S.%f"},
+        ],
+        "rules": [
+            {"pattern": r"runaway_exception.*Motor(left|right)_encoder", "category": r"Motor Runaway (\1)"},
+            {"pattern": r"motor_utils\.cpp.*publishing exception", "category": "Motor Exception"},
+        ],
+    }
+    cfg.update(extra)
+    (tmp_path / "r.json").write_text(json.dumps(cfg))
+    return load_rules(tmp_path / "r.json")
+
+
+def test_glog_timestamp_without_year(tmp_path):
+    rules = _rules(tmp_path)
+    line = "I1001 12:20:30.123456  1234 motor_utils.cpp:55] publishing exception msg"
+    ev = parse_log([line], rules, "V", now=datetime(2026, 10, 1, 14, 0))
+    assert ev[0].category == "Motor Exception"
+    assert ev[0].timestamp == datetime(2026, 10, 1, 12, 20, 30, 123456)
+
+
+def test_yearless_timestamp_across_new_year(tmp_path):
+    rules = _rules(tmp_path)
+    line = "I1231 23:00:00.000000  1 motor_utils.cpp:5] publishing exception msg"
+    ev = parse_log([line], rules, "V", now=datetime(2027, 1, 1, 1, 0))
+    assert ev[0].timestamp.year == 2026
+
+
+def test_group_reference_in_category(tmp_path):
+    rules = _rules(tmp_path)
+    line = "2026-10-01 12:00:00 - INFO [p.py:1] runaway_exception by 3, runaway: Motorright_encoder overshoot"
+    assert parse_log([line], rules, "V")[0].category == "Motor Runaway (right)"
+
+
+def test_burst_merging(tmp_path):
+    rules = _rules(tmp_path, merge_gap_s=60)
+    mk = lambda s: f"2026-10-01 07:{s} - INFO [p.py:1] runaway_exception by 3, runaway: Motorleft_encoder overshoot"
+    lines = [mk("00:00"), mk("00:20"), mk("00:50"), mk("05:00")]
+    assert len(parse_log(lines, rules, "V")) == 2   # one burst, then a separate incident
+    assert len(parse_log(lines, _rules(tmp_path), "V")) == 4   # no merging by default
