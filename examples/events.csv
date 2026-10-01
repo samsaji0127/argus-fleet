@@ -1,0 +1,28 @@
+timestamp,vehicle,category,recovery
+2026-01-01 22:25:00,VEH-A,CAN Drivers,fleet mode switch
+2026-01-01 22:34:00,VEH-A,LiDAR,fleet mode switch
+2026-01-01 23:11:00,VEH-A,Safety PLC,fleet mode switch
+2026-01-01 23:43:00,VEH-B,Control Module,manual switch
+2026-01-01 23:53:00,VEH-B,Safety PLC,fleet mode switch
+2026-01-02 00:12:00,VEH-A,CAN Drivers,fleet mode switch
+2026-01-02 00:31:00,VEH-A,Device Monitor,power cycle
+2026-01-02 01:02:00,VEH-A,Control Module,power cycle
+2026-01-02 01:42:00,VEH-A,Control Module,manual switch
+2026-01-02 02:10:00,VEH-A,Control Module,fleet mode switch
+2026-01-02 02:28:00,VEH-B,CAN Drivers,power cycle
+2026-01-02 03:02:00,VEH-B,LiDAR,power cycle
+2026-01-02 03:22:00,VEH-A,Peripherals,fleet mode switch
+2026-01-02 03:46:00,VEH-B,LiDAR,reset pose
+2026-01-02 04:09:00,VEH-A,Control Module,reset pose
+2026-01-02 04:24:00,VEH-B,Device Monitor,reset pose
+2026-01-02 04:55:00,VEH-A,Control Module,power cycle
+2026-01-02 05:21:00,VEH-B,Drivable Region,reset pose
+2026-01-02 05:30:00,VEH-A,Camera,reset pose
+2026-01-02 05:39:00,VEH-A,Camera,reset pose
+2026-01-02 06:02:00,VEH-B,LiDAR,fleet mode switch
+2026-01-02 06:36:00,VEH-B,Device Monitor,fleet mode switch
+2026-01-02 07:12:00,VEH-A,Peripherals,power cycle
+2026-01-02 07:25:00,VEH-A,CAN Drivers,reset pose
+2026-01-02 08:01:00,VEH-A,Device Monitor,reset pose
+2026-01-02 08:31:00,VEH-B,Device Monitor,reset pose
+2026-01-02 09:11:00,VEH-B,CAN Drivers,power cycle

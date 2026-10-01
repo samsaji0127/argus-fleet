@@ -1,0 +1,15 @@
+__pycache__/
+*.pyc
+.pytest_cache/
+.venv/
+*.egg-info/
+build/
+dist/
+# real logs and generated reports never go in the repo
+data/
+real/
+reports/
+*.log
+# real config and rules contain hostnames and internal log strings
+argus.json
+rules.json

@@ -1,0 +1,19 @@
+[build-system]
+requires = ["setuptools>=61"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "argus-fleet"
+version = "0.1.0"
+description = "Never-sleeping shift reports for robot fleets"
+readme = "README.md"
+requires-python = ">=3.8"
+
+[project.scripts]
+argus = "argus.cli:main"
+
+[tool.setuptools]
+packages = ["argus"]
+
+[tool.pytest.ini_options]
+pythonpath = ["."]

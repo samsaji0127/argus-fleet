@@ -1,0 +1,16 @@
+{
+  "timestamp": {
+    "regex": "^\\[?(\\d{4}-\\d{2}-\\d{2}[ T]\\d{2}:\\d{2}:\\d{2})",
+    "format": "iso"
+  },
+  "rules": [
+    {"pattern": "safety.?plc", "category": "Safety PLC"},
+    {"pattern": "device.?monitor.*(fail|error|exit)", "category": "Device Monitor"},
+    {"pattern": "lidar.*(error|timeout|lost)", "category": "LiDAR"},
+    {"pattern": "camera.*(disconnect|error|timeout)", "category": "Camera"},
+    {"pattern": "can.*(error|bus.?off|timeout)", "category": "CAN Drivers"},
+    {"pattern": "drivable.?region.*(error|traceback)", "category": "Drivable Region"},
+    {"pattern": "peripheral.*(error|fail)", "category": "Peripherals"},
+    {"pattern": "bad.?shutdown", "category": "Bad Shutdown"}
+  ]
+}

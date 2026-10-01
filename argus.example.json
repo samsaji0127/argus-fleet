@@ -1,0 +1,10 @@
+{
+  "label": "Shift",
+  "hours": 8,
+  "rules": "rules.json",
+  "tail_lines": 200000,
+  "vehicles": [
+    {"name": "VEH-A", "host": "user@HOST-A", "log": "/path/to/run/mule.log"},
+    {"name": "VEH-B", "host": "user@HOST-B", "log": "/path/to/run/mule.log"}
+  ]
+}
